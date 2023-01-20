@@ -37,4 +37,9 @@ class LigneServiceTest {
             () -> service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 0),
             "La quantite d'une ligne doit être positive");
     }
+
+    @Test
+    void QuantitéLigneNulle(){
+     
+    }
 }

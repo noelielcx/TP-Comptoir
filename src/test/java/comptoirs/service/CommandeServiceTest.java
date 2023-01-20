@@ -40,5 +40,14 @@ class CommandeServiceTest {
         var commande = service.creerCommande(ID_PETIT_CLIENT);
         assertEquals(VILLE_PETIT_CLIENT, commande.getAdresseLivraison().getVille(),
             "On doit recopier l'adresse du client dans l'adresse de livraison");
-    }   
+    }
+
+    @Test
+    void testDecrementerStock(){
+        var produit = produitDao .findById(98).orElseThrow();
+        int stockAvant = produit.getUnitesEnStock();
+        service.enregistreExpédition(99998);
+        produit = produitDao.findById(98).orElseThrow();
+        assertEquals(stockAvant -10, produit.getUnitesEnStock());
+    }
 }
