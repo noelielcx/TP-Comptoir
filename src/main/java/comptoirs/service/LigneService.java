@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Positive;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
+
 @Service
 @Validated // Les contraintes de validatipn des méthodes sont vérifiées
 public class LigneService {
@@ -45,6 +47,30 @@ public class LigneService {
      */
     @Transactional
     Ligne ajouterLigne(Integer commandeNum, Integer produitRef, @Positive int quantite) {
-        throw new UnsupportedOperationException("Cette méthode n'est pas implémentée");
+        //throw new UnsupportedOperationException("Cette méthode n'est pas implémentée");
+        // vérifications
+        var produit = produitDao.findById(produitRef).orElseThrow();
+        var commande = commandeDao.findById(commandeNum).orElseThrow();
+        if (commande.getEnvoyeele() == null) { //la commande n'a pas été envoyée
+            commande.setEnvoyeele(LocalDate.now());
+        } else{
+            throw new UnsupportedOperationException("La commande a déjà été expédiée");
+        }
+        if (quantite < 0){
+            throw new UnsupportedOperationException("La quantité doit > 0");
+        } else{
+            if (quantite > produit.getUnitesEnStock()){
+                throw new UnsupportedOperationException("La quantité ne peut pas dépasser le stock disponiible");
+            } else{ // si tout va bien
+                produit.setUnitesEnStock((produit.getUnitesEnStock())- quantite);
+            } // création de la ligne
+            var newLigne = new Ligne(commande, produit, quantite);
+            produit.setUnitesCommandees(produit.getUnitesCommandees() + newLigne.getQuantite());
+            // ajouter à la quantité totale commandée, la quantité à commander
+            commande.getLignes().add(newLigne);
+
+            return newLigne;
+        }
     }
 }
+
