@@ -40,6 +40,6 @@ class LigneServiceTest {
 
     @Test
     void QuantitéLigneNulle(){
-     
+
     }
 }
