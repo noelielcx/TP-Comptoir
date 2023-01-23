@@ -43,11 +43,12 @@ class CommandeServiceTest {
     }
 
     @Test
-    void testDecrementerStock(){
-        var produit = produitDao .findById(98).orElseThrow();
+    void testDecrementerStock(){ //avec data.sql
+        var produit = produitDao.findById(98).orElseThrow();
         int stockAvant = produit.getUnitesEnStock();
         service.enregistreExpédition(99998);
         produit = produitDao.findById(98).orElseThrow();
         assertEquals(stockAvant -10, produit.getUnitesEnStock());
     }
+
 }

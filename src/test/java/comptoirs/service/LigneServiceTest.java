@@ -39,7 +39,16 @@ class LigneServiceTest {
     }
 
     @Test
-    void QuantitéLigneNulle(){
+    void ajouterLigneProduitPasEnStock(){
+    assertThrows(Exception.class,
+            () -> service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_INDISPONIBLE, 1),
+            "La quantité n'est plus en stock");
+    }
 
+    @Test
+    void ajouterLigneSiCommandeDejaLivree(){
+        assertThrows(Exception.class,
+                () -> service.ajouterLigne(NUMERO_COMMANDE_DEJA_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 3),
+                "Cette ligne de commande a déjà été livrée");
     }
 }
