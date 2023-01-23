@@ -51,4 +51,11 @@ class LigneServiceTest {
                 () -> service.ajouterLigne(NUMERO_COMMANDE_DEJA_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 3),
                 "Cette ligne de commande a déjà été livrée");
     }
+
+    @Test
+    void ajouterLigneSiQuantiteNulle(){
+        assertThrows(Exception.class,
+        () -> service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_2, 0),
+        "La quantité de produit à commander est nulle");
+    }
 }
