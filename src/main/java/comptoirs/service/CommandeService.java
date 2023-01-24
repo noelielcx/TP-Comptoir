@@ -69,7 +69,7 @@ public class CommandeService {
         // TODO : implémenter ce service métier
         //throw new UnsupportedOperationException("Pas encore implémenté");
         var commande = commandeDao.findById(commandeNum).orElseThrow();
-            if (commande.setEnvoyeele() == null) {
+            if (commande.getEnvoyeele() == null) {
                 commande.setEnvoyeele(LocalDate.now());
                 for (Ligne l : commande.getLignes()) {
                     Produit p = l.getProduit();

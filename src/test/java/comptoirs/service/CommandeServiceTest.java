@@ -51,4 +51,10 @@ class CommandeServiceTest {
         assertEquals(stockAvant -10, produit.getUnitesEnStock());
     }
 
+    @Test
+    void CommandeExiste(){
+        assertThrows(Exception.class, () -> service.enregistreExpédition(NUMERO_COMMANDE_NON_EXISTANTE),
+                "La commande n'est pas enregistrée");
+    }
+
 }
